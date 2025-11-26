@@ -29,6 +29,13 @@ export const OWNER_NAME = "Jahnavi Kannan";
 
 export const WELCOME_MESSAGE = `Hello! I'm ${AI_NAME}, an AI assistant created by ${OWNER_NAME}.`;
 
+export const INITIAL_ASSISTANT_MESSAGE = [
+    {
+        role: "assistant",
+        content: WELCOME_MESSAGE
+    }
+];
+
 export const CLEAR_CHAT_TEXT = "New";
 
 export const MODERATION_DENIAL_MESSAGE_SEXUAL = "I can't discuss explicit sexual content. Please ask something else.";
