@@ -139,7 +139,7 @@ export const ReasoningTrigger = memo(
     return (
       <CollapsibleTrigger
         className={cn(
-          "flex w-full items-center gap-2 text-muted-foreground text-sm transition-colors hover:text-foreground",
+          "flex w-full items-center gap-2 text-violet-400 text-sm transition-all hover:text-violet-300 px-4 py-2.5 rounded-xl bg-violet-500/10 border border-violet-500/20 backdrop-blur-sm",
           className
         )}
         {...props}
@@ -150,7 +150,7 @@ export const ReasoningTrigger = memo(
             {getThinkingMessage(isStreaming, duration)}
             <ChevronDownIcon
               className={cn(
-                "size-4 transition-transform",
+                "size-4 transition-transform ml-auto",
                 isOpen ? "rotate-180" : "rotate-0"
               )}
             />
@@ -181,15 +181,15 @@ export const ReasoningContent = memo(
     return (
       <CollapsibleContent
         className={cn(
-          "mt-4 text-sm",
-          "data-[state=closed]:fade-out-0 data-[state=closed]:slide-out-to-top-2 data-[state=open]:slide-in-from-top-2 text-muted-foreground outline-none data-[state=closed]:animate-out data-[state=open]:animate-in",
+          "mt-3 text-sm",
+          "data-[state=closed]:fade-out-0 data-[state=closed]:slide-out-to-top-2 data-[state=open]:slide-in-from-top-2 text-slate-400 outline-none data-[state=closed]:animate-out data-[state=open]:animate-in",
           className
         )}
         {...props}
       >
         <div
           ref={contentRef}
-          className="max-h-[75px] overflow-y-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
+          className="max-h-[100px] overflow-y-auto px-4 py-3 rounded-xl bg-slate-800/30 border border-white/[0.04] [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
         >
           <Response className="grid gap-2">{children}</Response>
         </div>

@@ -137,28 +137,32 @@ export default function Chat() {
   }
 
   return (
-    <div className="flex h-screen items-center justify-center font-sans dark:bg-black">
-      <main className="w-full dark:bg-black h-screen relative">
-        <div className="fixed top-0 left-0 right-0 z-50 bg-linear-to-b from-background via-background/50 to-transparent dark:bg-black overflow-visible pb-16">
+    <div className="flex h-screen items-center justify-center font-sans">
+      <main className="w-full h-screen relative">
+        <div className="fixed top-0 left-0 right-0 z-50 overflow-visible pt-4">
           <div className="relative overflow-visible">
             <ChatHeader>
               <ChatHeaderBlock />
               <ChatHeaderBlock className="justify-center items-center">
-                <Avatar
-                  className="size-8 ring-1 ring-primary"
-                >
-                  <AvatarImage src="/logo.png" />
-                  <AvatarFallback>
-                    <Image src="/logo.png" alt="Logo" width={36} height={36} />
-                  </AvatarFallback>
-                </Avatar>
-                <p className="tracking-tight">Chat with {AI_NAME}</p>
+                <div className="relative">
+                  <Avatar className="size-10 ring-2 ring-sky-400/50 shadow-[0_0_20px_rgba(56,189,248,0.3)]">
+                    <AvatarImage src="/logo.png" />
+                    <AvatarFallback className="bg-gradient-to-br from-sky-400 to-violet-500 text-white font-semibold">
+                      AI
+                    </AvatarFallback>
+                  </Avatar>
+                  <div className="absolute -bottom-0.5 -right-0.5 size-3 bg-emerald-400 rounded-full border-2 border-slate-900 animate-pulse" />
+                </div>
+                <div className="flex flex-col">
+                  <p className="font-semibold tracking-tight text-slate-100">Chat with {AI_NAME}</p>
+                  <p className="text-xs text-slate-300">Always here to help</p>
+                </div>
               </ChatHeaderBlock>
               <ChatHeaderBlock className="justify-end">
                 <Button
-                  variant="outline"
+                  variant="ghost"
                   size="sm"
-                  className="cursor-pointer"
+                  className="cursor-pointer text-slate-300 hover:text-white hover:bg-white/10 transition-all duration-200 hover:-translate-y-0.5"
                   onClick={clearChat}
                 >
                   <Plus className="size-4" />
@@ -168,27 +172,35 @@ export default function Chat() {
             </ChatHeader>
           </div>
         </div>
-        <div className="h-screen overflow-y-auto px-5 py-4 w-full pt-[88px] pb-[150px]">
+        <div className="h-screen overflow-y-auto px-5 py-4 w-full pt-[100px] pb-[180px]">
           <div className="flex flex-col items-center justify-end min-h-full">
             {isClient ? (
               <>
                 <MessageWall messages={messages} status={status} durations={durations} onDurationChange={handleDurationChange} />
                 {status === "submitted" && (
-                  <div className="flex justify-start max-w-3xl w-full">
-                    <Loader2 className="size-4 animate-spin text-muted-foreground" />
+                  <div className="flex justify-start max-w-3xl w-full pt-2">
+                    <div className="flex items-center gap-2 text-sky-400">
+                      <Loader2 className="size-4 animate-spin" />
+                      <span className="text-sm text-slate-400">Thinking...</span>
+                    </div>
                   </div>
                 )}
               </>
             ) : (
-              <div className="flex justify-center max-w-2xl w-full">
-                <Loader2 className="size-4 animate-spin text-muted-foreground" />
+              <div className="flex flex-col items-center justify-center gap-4 max-w-2xl w-full py-20">
+                <div className="relative">
+                  <div className="size-16 rounded-2xl bg-gradient-to-br from-sky-400 to-violet-500 flex items-center justify-center shadow-[0_0_40px_rgba(56,189,248,0.3)]">
+                    <Loader2 className="size-8 animate-spin text-white" />
+                  </div>
+                </div>
+                <p className="text-slate-400 text-sm">Loading your conversation...</p>
               </div>
             )}
           </div>
         </div>
-        <div className="fixed bottom-0 left-0 right-0 z-50 bg-linear-to-t from-background via-background/50 to-transparent dark:bg-black overflow-visible pt-13">
-          <div className="w-full px-5 pt-5 pb-1 items-center flex justify-center relative overflow-visible">
-            <div className="message-fade-overlay" />
+        <div className="fixed bottom-0 left-0 right-0 z-50 overflow-visible">
+          <div className="absolute inset-0 bg-gradient-to-t from-[#020617] via-[#020617]/80 to-transparent pointer-events-none" />
+          <div className="relative w-full px-5 pt-6 pb-2 items-center flex justify-center">
             <div className="max-w-3xl w-full">
               <form id="chat-form" onSubmit={form.handleSubmit(onSubmit)}>
                 <FieldGroup>
@@ -200,11 +212,11 @@ export default function Chat() {
                         <FieldLabel htmlFor="chat-form-message" className="sr-only">
                           Message
                         </FieldLabel>
-                        <div className="relative h-13">
+                        <div className="relative glass-input rounded-2xl input-glow transition-all duration-300">
                           <Input
                             {...field}
                             id="chat-form-message"
-                            className="h-15 pr-15 pl-5 bg-card rounded-[20px]"
+                            className="h-14 pr-14 pl-5 bg-transparent border-0 rounded-2xl text-slate-100 placeholder:text-slate-500 focus-visible:ring-0 focus-visible:ring-offset-0"
                             placeholder="Type your message here..."
                             disabled={status === "streaming"}
                             aria-invalid={fieldState.invalid}
@@ -218,17 +230,17 @@ export default function Chat() {
                           />
                           {(status == "ready" || status == "error") && (
                             <Button
-                              className="absolute right-3 top-3 rounded-full"
+                              className="absolute right-2 top-2 size-10 rounded-xl send-button border-0 text-white shadow-lg transition-all duration-200 disabled:opacity-30 disabled:cursor-not-allowed"
                               type="submit"
                               disabled={!field.value.trim()}
                               size="icon"
                             >
-                              <ArrowUp className="size-4" />
+                              <ArrowUp className="size-5" />
                             </Button>
                           )}
                           {(status == "streaming" || status == "submitted") && (
                             <Button
-                              className="absolute right-2 top-2 rounded-full"
+                              className="absolute right-2 top-2 size-10 rounded-xl bg-slate-700 hover:bg-slate-600 border-0 text-white transition-all duration-200"
                               size="icon"
                               onClick={() => {
                                 stop();
@@ -245,11 +257,14 @@ export default function Chat() {
               </form>
             </div>
           </div>
-          <div className="w-full px-5 py-3 items-center flex justify-center text-xs text-muted-foreground">
-            © {new Date().getFullYear()} {OWNER_NAME}&nbsp;<Link href="/terms" className="underline">Terms of Use</Link>&nbsp;Powered by&nbsp;<Link href="https://ringel.ai/" className="underline">Ringel.AI</Link>
+          <div className="relative w-full px-5 py-3 items-center flex justify-center text-xs text-slate-400">
+            © {new Date().getFullYear()} {OWNER_NAME}&nbsp;
+            <Link href="/terms" className="text-slate-300 hover:text-sky-400 transition-colors">Terms of Use</Link>
+            &nbsp;Powered by&nbsp;
+            <Link href="https://ringel.ai/" className="text-slate-300 hover:text-sky-400 transition-colors">Ringel.AI</Link>
           </div>
         </div>
       </main>
-    </div >
+    </div>
   );
 }

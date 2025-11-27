@@ -75,17 +75,17 @@ export function ToolCall({ part }: { part: ToolCallPart }) {
     const formattedArgs = formatToolArguments(toolName || "", input, toolDisplay);
 
     return (
-        <div className="flex items-center gap-2">
-            <div className="flex items-center gap-2 text-muted-foreground shrink-0">
+        <div className="flex items-center gap-3 px-4 py-2.5 rounded-xl bg-slate-800/40 border border-white/[0.06] backdrop-blur-sm">
+            <div className="flex items-center gap-2 text-sky-400 shrink-0">
                 {toolDisplay.call_icon}
                 <Shimmer duration={1}>{toolDisplay.call_label}</Shimmer>
             </div>
             {toolDisplay.formatArgs && formattedArgs && (
-                <span className="text-muted-foreground/75 flex-1 min-w-0 truncate">
+                <span className="text-slate-300 flex-1 min-w-0 truncate text-sm">
                     {formattedArgs}
                 </span>
             )}
-        </div >
+        </div>
     );
 }
 
@@ -98,13 +98,13 @@ export function ToolResult({ part }: { part: ToolResultPart }) {
     const formattedArgs = input !== undefined ? formatToolArguments(toolName || "", input, toolDisplay) : "";
 
     return (
-        <div className="flex items-center gap-2">
-            <div className="flex items-center gap-2 text-muted-foreground shrink-0">
+        <div className="flex items-center gap-3 px-4 py-2.5 rounded-xl bg-emerald-500/10 border border-emerald-500/20 backdrop-blur-sm">
+            <div className="flex items-center gap-2 text-emerald-400 shrink-0">
                 {toolDisplay.result_icon}
                 <span>{toolDisplay.result_label}</span>
             </div>
             {toolDisplay.formatArgs && formattedArgs && (
-                <span className="text-muted-foreground/75 flex-1 min-w-0 truncate">
+                <span className="text-slate-300 flex-1 min-w-0 truncate text-sm">
                     {formattedArgs}
                 </span>
             )}
