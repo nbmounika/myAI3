@@ -13,7 +13,7 @@ export function AssistantMessage({ message, status, isLastMessage, durations, on
                     const duration = durations?.[durationKey];
 
                     if (part.type === "text") {
-                        return <Response key={${message.id}-${i}}>{part.text}</Response>;
+                        return <Response key={`${message.id}-${i}`}>{part.text}</Response>;
                     } else if (part.type === "reasoning") {
                         return (
                             <ReasoningPart
