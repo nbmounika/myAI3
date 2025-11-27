@@ -90,8 +90,27 @@ Most customization can be done in two files:
 1. **`config.ts`** - Change AI identity, model, messages
 2. **`prompts.ts`** - Adjust AI behavior and responses
 
-## Recent Changes (Project Import)
+## Recent Changes
 
+### UI Redesign (Latest)
+- Implemented premium "Deep Space" dark theme with navy gradient background
+- Added glassmorphic (frosted glass) effects throughout the interface
+- Enhanced header with floating pill design, avatar glow ring, and online indicator
+- Redesigned user messages with glass-effect bubbles and gradient borders
+- Polished assistant messages with fade-in animations and improved typography
+- Styled tool calls with color-coded states (sky-blue for in-progress, emerald for complete)
+- Added violet-themed reasoning blocks with collapsible panels
+- Created animated gradient send button with hover effects
+- Improved accessibility with enhanced text contrast ratios
+- Added smooth animations: fade-in, slide-up, pulse effects
+
+### Design Tokens
+- Primary accent: Sky blue (#38bdf8)
+- Secondary accent: Orange (#f97316)
+- Background: Deep space gradient (oklch dark navy)
+- Glass effects: backdrop-blur-xl with translucent backgrounds
+
+### Project Import
 - Installed all npm dependencies
 - Configured Next.js dev server to run on 0.0.0.0:5000 for Replit environment
 - Set up workflow for Next.js Dev Server
