@@ -17,7 +17,7 @@ export function AssistantMessage({ message, status, isLastMessage, durations, on
                     } else if (part.type === "reasoning") {
                         return (
                             <ReasoningPart
-                                key={${message.id}-${i}}
+                                key={`${message.id}-${i}`}
                                 part={part}
                                 isStreaming={isStreaming}
                                 duration={duration}
@@ -27,17 +27,17 @@ export function AssistantMessage({ message, status, isLastMessage, durations, on
                     } else if (
                         part.type.startsWith("tool-") || part.type === "dynamic-tool"
                     ) {
-                        if ('state' in part && part.state === "output-available") {
+                        if ("state" in part && part.state === "output-available") {
                             return (
                                 <ToolResult
-                                    key={${message.id}-${i}}
+                                    key={`${message.id}-${i}`}
                                     part={part as unknown as ToolResultPart}
                                 />
                             );
                         } else {
                             return (
                                 <ToolCall
-                                    key={${message.id}-${i}}
+                                    key={`${message.id}-${i}`}
                                     part={part as unknown as ToolCallPart}
                                 />
                             );
