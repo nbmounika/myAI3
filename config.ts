@@ -24,10 +24,14 @@ function getDateAndTime(): string {
 
 export const DATE_AND_TIME = getDateAndTime();
 
-export const AI_NAME = "DemoBot";
-export const OWNER_NAME = "Jahnavi Kannan";
+export const AI_NAME = "PrepEdge";
+export const OWNER_NAME = "Jahnavi Kannan & N B Mounika";
 
-export const WELCOME_MESSAGE = `Hello! I'm ${AI_NAME}, an AI assistant created by ${OWNER_NAME}.`;
+export const WELCOME_MESSAGE = `
+Hello! I'm ${AI_NAME}, your mock interview partner for MBA placements created by ${OWNER_NAME}.
+I conduct realistic, technical interview simulations to help you strengthen your concepts, business understanding, and overall placement readiness. 
+Whenever you're ready, type "Start".
+`;
 
 export const INITIAL_ASSISTANT_MESSAGE = [
     {
