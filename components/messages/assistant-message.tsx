@@ -3,6 +3,8 @@ import { Response } from "@/components/ai-elements/response";
 import { ReasoningPart } from "./reasoning-part";
 import { ToolCall, ToolResult } from "./tool-call";
 import { DomainTopicSelector } from "@/components/ai-elements/domain-topic-selector";
+import { MCQQuestion, MCQQuestionData } from "@/components/ai-elements/mcq-question";
+import { FeedbackDashboard, PerformanceMetrics } from "@/components/ai-elements/feedback-dashboard";
 import { useChat } from "@ai-sdk/react";
 
 interface DomainTopicJSON {
@@ -11,10 +13,43 @@ interface DomainTopicJSON {
   topics: string[];
 }
 
+interface MCQJSON extends MCQQuestionData {
+  type: "mcq";
+}
+
+interface FeedbackJSON {
+  type: "feedback";
+  metrics: PerformanceMetrics;
+}
+
 function tryParseDomainTopic(text: string): DomainTopicJSON | null {
   try {
     const parsed = JSON.parse(text);
     if (parsed.type === "domain_topic_selector" && Array.isArray(parsed.domains)) {
+      return parsed;
+    }
+  } catch {
+    return null;
+  }
+  return null;
+}
+
+function tryParseMCQ(text: string): MCQJSON | null {
+  try {
+    const parsed = JSON.parse(text);
+    if (parsed.type === "mcq" && parsed.question && Array.isArray(parsed.options)) {
+      return parsed;
+    }
+  } catch {
+    return null;
+  }
+  return null;
+}
+
+function tryParseFeedback(text: string): FeedbackJSON | null {
+  try {
+    const parsed = JSON.parse(text);
+    if (parsed.type === "feedback" && parsed.metrics) {
       return parsed;
     }
   } catch {
@@ -48,6 +83,31 @@ export function AssistantMessage({ message, status, isLastMessage, durations, on
                                 />
                             );
                         }
+
+                        const mcq = tryParseMCQ(part.text);
+                        if (mcq) {
+                            return (
+                                <MCQQuestion
+                                    key={`${message.id}-${i}`}
+                                    data={mcq}
+                                    onSubmit={(selectedOptionId) => {
+                                        const selectedOption = mcq.options.find(opt => opt.id === selectedOptionId);
+                                        sendMessage({ text: `I choose: ${selectedOption?.text}` });
+                                    }}
+                                />
+                            );
+                        }
+
+                        const feedback = tryParseFeedback(part.text);
+                        if (feedback) {
+                            return (
+                                <FeedbackDashboard
+                                    key={`${message.id}-${i}`}
+                                    metrics={feedback.metrics}
+                                />
+                            );
+                        }
+
                         return <Response key={`${message.id}-${i}`}>{part.text}</Response>;
                     } else if (part.type === "reasoning") {
                         return (

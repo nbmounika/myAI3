@@ -92,7 +92,19 @@ Most customization can be done in two files:
 
 ## Recent Changes
 
-### CV-Based & Domain-Specific Interview Modes (Latest)
+### MCQ Questions & Performance Dashboard (Latest)
+- Implemented MCQ questions with radio button options for user selection
+- Created comprehensive feedback dashboard with:
+  - Summary cards showing total, correct, and incorrect answers
+  - Pie chart for answer distribution (correct vs incorrect)
+  - Bar charts for performance metrics and category breakdown
+  - Detailed question review section with correct/incorrect indicators
+- Built PDF report generator using jsPDF and html2canvas
+- Added "Download Report as PDF" functionality
+- Integrated MCQ and feedback components into chat message renderer
+- Beautiful UI with glassmorphic design and performance metrics visualization
+
+### CV-Based & Domain-Specific Interview Modes
 - Added interview type selection screen with two options: CV-Based and Domain-Specific
 - Implemented CV upload component with drag-and-drop support (PDF/JPG/PNG up to 10MB)
 - Created persistent CV storage using localStorage for future use
