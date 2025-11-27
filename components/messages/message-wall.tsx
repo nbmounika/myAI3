@@ -66,7 +66,7 @@ import { ReasoningPart } from "./reasoning-part";
 import { ToolCall, ToolResult } from "./tool-call";
 import { ToolRenderer } from "./tool-renderer";
 
-export function AssistantMessage({ 
+export function MessageWall({ 
     message, 
     status, 
     isLastMessage, 
