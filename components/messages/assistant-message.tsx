@@ -4,7 +4,7 @@ import { UIMessage, ToolCallPart, ToolResultPart } from "ai";
 import { Response } from "@/components/ai-elements/response";
 import { ReasoningPart } from "./reasoning-part";
 import { ToolCall, ToolResult } from "./tool-call";
-import DomainTopicSelector from "@/components/DomainTopicSelector"; // ensure path is correct
+import DomainTopicSelector from "../DomainTopicSelector";
 import React from "react";
 
 export function AssistantMessage({
