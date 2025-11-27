@@ -92,7 +92,17 @@ Most customization can be done in two files:
 
 ## Recent Changes
 
-### Domain/Topic Selector (Latest)
+### CV-Based & Domain-Specific Interview Modes (Latest)
+- Added interview type selection screen with two options: CV-Based and Domain-Specific
+- Implemented CV upload component with drag-and-drop support (PDF/JPG/PNG up to 10MB)
+- Created persistent CV storage using localStorage for future use
+- Added interview mode switcher buttons that appear during conversation
+- Users can seamlessly switch between CV-based and domain-specific interviews
+- When CV is uploaded, it's stored with metadata for future reference
+- CV upload sends context to AI for personalized questioning
+- Beautiful UI with glassmorphic design matching existing theme
+
+### Domain/Topic Selector
 - Created beautiful dropdown-based domain selector with glassmorphic design
 - Implemented cascading topic selector that appears after domain selection
 - Added smooth animations and transitions for selecting workflow
