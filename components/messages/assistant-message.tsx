@@ -9,7 +9,7 @@ export function AssistantMessage({ message, status, isLastMessage, durations, on
             <div className="text-sm flex flex-col gap-4">
                 {message.parts.map((part, i) => {
                     const isStreaming = status === "streaming" && isLastMessage && i === message.parts.length - 1;
-                    const durationKey = ${message.id}-${i};
+                    const durationKey = `${message.id}-${i}`;
                     const duration = durations?.[durationKey];
 
                     if (part.type === "text") {
