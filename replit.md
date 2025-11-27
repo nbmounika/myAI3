@@ -92,17 +92,18 @@ Most customization can be done in two files:
 
 ## Recent Changes
 
-### Critical Fixes for Interactive Components (Latest)
-- **Fixed dropdown rendering**: Updated JSON parsing in assistant-message.tsx to properly detect and render interactive components
-- **Made MCQs conditional**: Updated prompts to specify MCQs should be used selectively for conceptual questions, not mandatory for all
-- **CV-based interview flow**: Enhanced prompts with explicit CV-based interview instructions - users no longer skip to domain-specific after CV upload
-- **Feedback dashboard rendering**: Fixed feedback component to properly parse JSON format and display visual charts instead of text
-- **JSON format specifications**: Added comprehensive prompt instructions for AI to output correct JSON formats:
-  - domain_topic_selector: For domain/topic selection dropdowns
-  - mcq: For multiple-choice questions with 4 options
-  - feedback: For performance metrics dashboard with charts
-- **Fixed TypeScript errors**: Resolved optional field handling in feedback component
-- **Improved component flexibility**: Made feedback metrics optional fields to handle various interview types
+### Removed CV Features & Fixed Dashboard Rendering (Latest)
+- **Completely removed CV upload feature**: Deleted cv-upload.tsx, cv-storage.ts, interview-type-selector.tsx, and interview-switcher.tsx
+- **Simplified to domain-specific only**: App now directly starts domain-specific interview flow
+- **Fixed JSON rendering**: Updated prompts to ensure AI outputs pure JSON without markdown wrapping for dropdowns, MCQs, and dashboards
+- **Enhanced dropdown rendering**: DomainTopicSelector now properly detects JSON type "domain_topic_selector" and renders interactive Radix UI Select components
+- **Interactive dashboard**: Feedback component renders visual dashboard with:
+  - Summary metrics cards (total, correct, incorrect, accuracy)
+  - Pie chart for answer distribution
+  - Bar charts for performance by category
+  - Downloadable PDF report with html2canvas + jsPDF
+- **Selective MCQ questions**: Updated MCQ guidelines - only used for conceptual questions with 4 options, not mandatory for all
+- **Clear JSON format instructions**: Added explicit instructions in prompts to output JSON as plain text (not markdown-wrapped)
 
 ### Previous: MCQ Questions & Performance Dashboard
 - Implemented MCQ questions with radio button options for user selection

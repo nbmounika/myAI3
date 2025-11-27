@@ -23,10 +23,6 @@ import { useEffect, useState, useRef } from "react";
 import { AI_NAME, CLEAR_CHAT_TEXT, OWNER_NAME, WELCOME_MESSAGE } from "@/config";
 import Image from "next/image";
 import Link from "next/link";
-import { InterviewTypeSelector } from "@/components/ai-elements/interview-type-selector";
-import { CVUpload } from "@/components/ai-elements/cv-upload";
-import { InterviewSwitcher } from "@/components/ai-elements/interview-switcher";
-import { cvStorage } from "@/lib/cv-storage";
 
 const formSchema = z.object({
   message: z
@@ -72,8 +68,6 @@ const saveMessagesToStorage = (messages: UIMessage[], durations: Record<string, 
 export default function Chat() {
   const [isClient, setIsClient] = useState(false);
   const [durations, setDurations] = useState<Record<string, number>>({});
-  const [interviewType, setInterviewType] = useState<"cv" | "domain" | null>(null);
-  const [isUploadingCV, setIsUploadingCV] = useState(false);
   const welcomeMessageShownRef = useRef<boolean>(false);
 
   const stored = typeof window !== 'undefined' ? loadMessagesFromStorage() : { messages: [], durations: {} };
@@ -138,53 +132,8 @@ export default function Chat() {
     const newDurations = {};
     setMessages(newMessages);
     setDurations(newDurations);
-    setInterviewType(null);
     saveMessagesToStorage(newMessages, newDurations);
     toast.success("Chat cleared");
-  }
-
-  async function handleCVUpload(file: File) {
-    setIsUploadingCV(true);
-    try {
-      const base64 = await cvStorage.fileToBase64(file);
-      const cvData = {
-        id: `cv-${Date.now()}`,
-        fileName: file.name,
-        fileData: base64,
-        fileType: file.type,
-        uploadedAt: Date.now(),
-        conversationId: messages[0]?.id || `conv-${Date.now()}`,
-      };
-      cvStorage.saveCVData(cvData);
-      
-      // Send message to AI with CV info
-      sendMessage({ text: `I have uploaded my CV: ${file.name}. Please analyze it and provide personalized interview questions.` });
-      setInterviewType("cv");
-      toast.success("CV uploaded successfully!");
-    } catch (error) {
-      console.error("Failed to upload CV:", error);
-      toast.error("Failed to upload CV");
-    } finally {
-      setIsUploadingCV(false);
-    }
-  }
-
-  function handleSelectCVBased() {
-    setInterviewType("cv");
-  }
-
-  function handleSelectDomainBased() {
-    setInterviewType("domain");
-  }
-
-  function handleSwitchToCVBased() {
-    setInterviewType("cv");
-    sendMessage({ text: "Switch to CV-based interview" });
-  }
-
-  function handleSwitchToDomainBased() {
-    setInterviewType("domain");
-    sendMessage({ text: "Switch to domain-specific interview" });
   }
 
   return (
@@ -227,25 +176,7 @@ export default function Chat() {
           <div className="flex flex-col items-center justify-end min-h-full">
             {isClient ? (
               <>
-                {interviewType === null && messages.length <= 1 && (
-                  <InterviewTypeSelector
-                    onSelectCVBased={handleSelectCVBased}
-                    onSelectDomainBased={handleSelectDomainBased}
-                  />
-                )}
-                {interviewType === "cv" && messages.length <= 1 && (
-                  <CVUpload onUpload={handleCVUpload} isLoading={isUploadingCV} />
-                )}
                 <MessageWall messages={messages} status={status} durations={durations} onDurationChange={handleDurationChange} />
-                {interviewType && (
-                  <div className="flex justify-start max-w-3xl w-full pt-4 gap-2">
-                    <InterviewSwitcher
-                      currentType={interviewType}
-                      onSwitchToCVBased={handleSwitchToCVBased}
-                      onSwitchToDomainBased={handleSwitchToDomainBased}
-                    />
-                  </div>
-                )}
                 {status === "submitted" && (
                   <div className="flex justify-start max-w-3xl w-full pt-2">
                     <div className="flex items-center gap-2 text-sky-400">
