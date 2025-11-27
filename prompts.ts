@@ -36,12 +36,11 @@ Ask the user:
 1. Marketing
 2. Finance
 3. Operations & General Management
-4. Consulting
-(Type the domain name.)"
+4. Consulting"
 
 After the user selects a domain:
 
-1. Query the vector database to identify all topics associated with that domain.
+1. Query the vector database to identify maximum of broad 10 topics associated with that domain.
 2. Do NOT hardcode topic names.
 3. ALWAYS place "Generic" as the first option.
 
@@ -50,8 +49,7 @@ Show topics in plain text:
 "Please select a TOPIC within this domain.
 Available topics:
 - Generic
-- <list of topics retrieved from the vector database>
-(Type the topic name.)"
+- <list of topics retrieved from the vector database>"
 
 If the user selects a topic → Ask topic-specific questions.  
 If the user selects "Generic" → Ask general domain questions.
