@@ -10,17 +10,17 @@ export interface PerformanceMetrics {
   totalQuestions: number;
   correctAnswers: number;
   incorrectAnswers: number;
-  score: number;
+  score?: number;
   accuracy: number;
-  domain: string;
-  topic: string;
-  interviewType: "cv" | "domain";
+  domain?: string;
+  topic?: string;
+  interviewType?: "cv" | "domain";
   questionDetails: Array<{
     question: string;
     userAnswer: string;
-    correctAnswer: string;
+    correctAnswer?: string;
     isCorrect: boolean;
-    category: string;
+    category?: string;
   }>;
 }
 
@@ -44,18 +44,19 @@ export function FeedbackDashboard({ metrics }: FeedbackDashboardProps) {
     },
     {
       category: "Score",
-      percentage: (metrics.score / metrics.totalQuestions) * 100,
+      percentage: metrics.score ? (metrics.score / metrics.totalQuestions) * 100 : 0,
     },
   ];
 
   const categoryBreakdown = metrics.questionDetails.reduce((acc, q) => {
-    const existing = acc.find((item) => item.category === q.category);
+    const categoryName = q.category || "General";
+    const existing = acc.find((item) => item.category === categoryName);
     if (existing) {
       existing.total += 1;
       if (q.isCorrect) existing.correct += 1;
     } else {
       acc.push({
-        category: q.category,
+        category: categoryName,
         correct: q.isCorrect ? 1 : 0,
         total: 1,
       });
@@ -83,7 +84,7 @@ export function FeedbackDashboard({ metrics }: FeedbackDashboardProps) {
             Interview Performance Report
           </h2>
           <p className="text-slate-400">
-            {metrics.interviewType === "cv" ? "CV-Based" : "Domain-Specific"} Interview • {metrics.domain} • {metrics.topic}
+            {metrics.interviewType === "cv" ? "CV-Based" : metrics.interviewType === "domain" ? "Domain-Specific" : "Interview"} Interview {metrics.domain && `• ${metrics.domain}`} {metrics.topic && `• ${metrics.topic}`}
           </p>
         </div>
 

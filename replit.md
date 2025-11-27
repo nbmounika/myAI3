@@ -92,17 +92,23 @@ Most customization can be done in two files:
 
 ## Recent Changes
 
-### MCQ Questions & Performance Dashboard (Latest)
+### Critical Fixes for Interactive Components (Latest)
+- **Fixed dropdown rendering**: Updated JSON parsing in assistant-message.tsx to properly detect and render interactive components
+- **Made MCQs conditional**: Updated prompts to specify MCQs should be used selectively for conceptual questions, not mandatory for all
+- **CV-based interview flow**: Enhanced prompts with explicit CV-based interview instructions - users no longer skip to domain-specific after CV upload
+- **Feedback dashboard rendering**: Fixed feedback component to properly parse JSON format and display visual charts instead of text
+- **JSON format specifications**: Added comprehensive prompt instructions for AI to output correct JSON formats:
+  - domain_topic_selector: For domain/topic selection dropdowns
+  - mcq: For multiple-choice questions with 4 options
+  - feedback: For performance metrics dashboard with charts
+- **Fixed TypeScript errors**: Resolved optional field handling in feedback component
+- **Improved component flexibility**: Made feedback metrics optional fields to handle various interview types
+
+### Previous: MCQ Questions & Performance Dashboard
 - Implemented MCQ questions with radio button options for user selection
-- Created comprehensive feedback dashboard with:
-  - Summary cards showing total, correct, and incorrect answers
-  - Pie chart for answer distribution (correct vs incorrect)
-  - Bar charts for performance metrics and category breakdown
-  - Detailed question review section with correct/incorrect indicators
+- Created comprehensive feedback dashboard with summary cards, pie charts, bar charts
 - Built PDF report generator using jsPDF and html2canvas
-- Added "Download Report as PDF" functionality
 - Integrated MCQ and feedback components into chat message renderer
-- Beautiful UI with glassmorphic design and performance metrics visualization
 
 ### CV-Based & Domain-Specific Interview Modes
 - Added interview type selection screen with two options: CV-Based and Domain-Specific

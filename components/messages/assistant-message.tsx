@@ -70,13 +70,21 @@ export function AssistantMessage({ message, status, isLastMessage, durations, on
                     const duration = durations?.[durationKey];
 
                     if (part.type === "text") {
-                        const domainTopic = tryParseDomainTopic(part.text);
-                        if (domainTopic) {
+                        // Try to parse as JSON first for interactive components
+                        let jsonContent = null;
+                        try {
+                            jsonContent = JSON.parse(part.text);
+                        } catch {
+                            jsonContent = null;
+                        }
+
+                        // Check for domain topic selector
+                        if (jsonContent?.type === "domain_topic_selector") {
                             return (
                                 <DomainTopicSelector
                                     key={`${message.id}-${i}`}
-                                    domains={domainTopic.domains}
-                                    topics={domainTopic.topics}
+                                    domains={jsonContent.domains || []}
+                                    topics={jsonContent.topics || []}
                                     onSubmit={(domain, topic) => {
                                         sendMessage({ text: `Domain: ${domain}, Topic: ${topic}` });
                                     }}
@@ -84,26 +92,26 @@ export function AssistantMessage({ message, status, isLastMessage, durations, on
                             );
                         }
 
-                        const mcq = tryParseMCQ(part.text);
-                        if (mcq) {
+                        // Check for MCQ
+                        if (jsonContent?.type === "mcq" && jsonContent.question && jsonContent.options) {
                             return (
                                 <MCQQuestion
                                     key={`${message.id}-${i}`}
-                                    data={mcq}
+                                    data={jsonContent as MCQQuestionData}
                                     onSubmit={(selectedOptionId) => {
-                                        const selectedOption = mcq.options.find(opt => opt.id === selectedOptionId);
+                                        const selectedOption = jsonContent.options.find((opt: any) => opt.id === selectedOptionId);
                                         sendMessage({ text: `I choose: ${selectedOption?.text}` });
                                     }}
                                 />
                             );
                         }
 
-                        const feedback = tryParseFeedback(part.text);
-                        if (feedback) {
+                        // Check for feedback dashboard
+                        if (jsonContent?.type === "feedback" && jsonContent.metrics) {
                             return (
                                 <FeedbackDashboard
                                     key={`${message.id}-${i}`}
-                                    metrics={feedback.metrics}
+                                    metrics={jsonContent.metrics}
                                 />
                             );
                         }
