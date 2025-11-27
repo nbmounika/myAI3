@@ -73,6 +73,7 @@ export async function POST(req: Request) {
                 reasoningSummary: 'auto',
                 reasoningEffort: 'low',
                 parallelToolCalls: false,
+                max_output_tokens: 3000
             }
         }
     });
