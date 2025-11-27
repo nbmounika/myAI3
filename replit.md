@@ -92,7 +92,17 @@ Most customization can be done in two files:
 
 ## Recent Changes
 
-### UI Redesign (Latest)
+### Domain/Topic Selector (Latest)
+- Created beautiful dropdown-based domain selector with glassmorphic design
+- Implemented cascading topic selector that appears after domain selection
+- Added smooth animations and transitions for selecting workflow
+- Integrated with chat system to send domain/topic selections
+- Styled with matching deep space theme and accent colors (sky-blue for domain, orange for topic)
+- Added visual feedback (emerald indicator dots) for completed selections
+- Implemented "Start Interview" button with gradient and glow effects
+- Added helpful info messages and smooth reveal animations
+
+### UI Redesign
 - Implemented premium "Deep Space" dark theme with navy gradient background
 - Added glassmorphic (frosted glass) effects throughout the interface
 - Enhanced header with floating pill design, avatar glow ring, and online indicator
